@@ -28,7 +28,9 @@ fun decideMove(request: MoveRequest): Direction {
 
         // TODO: Step 3 - Don't collide with others.
         // Use information in the request to prevent your Battlesnake from colliding with others.
-
+        val bodies : MutableList<Position> = mutableListOf()
+        request.board.snakes.forEach { bodies.addAll(it.body) }
+        !bodies.contains(newPosition)
 
         // TODO: Step 4 - Find food.
         // Use information in the request to seek out and find food.
