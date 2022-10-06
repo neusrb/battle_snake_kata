@@ -13,27 +13,29 @@ fun decideMove(request: MoveRequest): Direction {
 
         // Step 0: Don't let your Battlesnake move back on its own neck
         val neck = request.you.body[1]
-        newPosition != neck
+        val avoidNeck = newPosition != neck
 
         // TODO: Step 1 - Don't hit walls.
         // Use information in the request to prevent your Battlesnake from moving beyond the boundaries of the board.
         val boardWidth = request.board.width
         val boardHeight = request.board.height
-        newPosition.x in 0 until boardWidth-1 && newPosition.y in 0 until boardHeight-1
+        val avoidWalls = newPosition.x in 0 until boardWidth-1 && newPosition.y in 0 until boardHeight-1
 
         // TODO: Step 2 - Don't hit yourself.
         // Use information in the request to prevent your Battlesnake from colliding with itself.
         val myBody = request.you.body
-        !myBody.contains(newPosition)
+        val avoidMyself = !myBody.contains(newPosition)
 
         // TODO: Step 3 - Don't collide with others.
         // Use information in the request to prevent your Battlesnake from colliding with others.
         val bodies : MutableList<Position> = mutableListOf()
         request.board.snakes.forEach { bodies.addAll(it.body) }
-        !bodies.contains(newPosition)
+        val avoidOthers = !bodies.contains(newPosition)
 
         // TODO: Step 4 - Find food.
         // Use information in the request to seek out and find food.
+
+        avoidNeck && avoidWalls && avoidMyself && avoidOthers
     }
 
     // Finally, choose a move from the available safe moves.
