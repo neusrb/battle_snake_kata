@@ -25,11 +25,7 @@ fun decideMove(request: MoveRequest): Direction {
         // Use information in the request to prevent your Battlesnake from colliding with itself.
 
         val myBody = request.you.body
-        val xPositions = mutableListOf<Int>()
-        myBody.forEach { xPositions.add(it.x) }
-        val yPositions = mutableListOf<Int>()
-        myBody.forEach { xPositions.add(it.y) }
-        val avoidMyself = !xPositions.contains(newPosition.x) && !yPositions.contains(newPosition.y)
+        val avoidMyself = !myBody.contains(newPosition)
 
         // TODO: Step 3 - Don't collide with others.
         // Use information in the request to prevent your Battlesnake from colliding with others.
